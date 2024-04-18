@@ -13,6 +13,8 @@ def load_data(uploaded_file):
 
 def preprocess_data(data):
     current_year = datetime.now().year
+    # convert data['date_of_birth'] to datetime
+    data['date_of_birth'] = pd.to_datetime(data['date_of_birth'])
     data['age'] = current_year - data['date_of_birth'].dt.year
     return data
 
@@ -51,6 +53,23 @@ def plot_figures(data, transactions_per_user):
 st.title('Financial Transactions Analysis Dashboard')
 
 uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+if uploaded_file is None:
+    df = pd.read_csv('txn_history_dummysample.csv')
+    data = preprocess_data(df)
+    age_stats, txn_amount_stats, transactions_per_user = generate_statistics(data)
+    fig = plot_figures(data, transactions_per_user)
+
+    st.write("### Age Statistics")
+    st.write(age_stats)
+
+    st.write("### Transaction Amount Statistics")
+    st.write(txn_amount_stats)
+
+    st.write("### Transactions Per User")
+    st.write(transactions_per_user.head())  # You might want to display this differently
+
+    st.write("### Visualizations")
+    st.pyplot(fig)
 if uploaded_file is not None:
     data = load_data(uploaded_file)
     data = preprocess_data(data)
