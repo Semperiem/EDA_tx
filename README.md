@@ -12,8 +12,8 @@ This exercice doesn't include:
 * Unzip the file and go to the exercice folder
 * Open terminal in this folder
 * Install miniconda or anaconda for setting up the environment:
-conda env create -f environment.yml
-conda activate myenv
+- conda env create -f environment.yml
+- conda activate myenv
 * Run the streamlit app 
 streamlit run main.py
 
